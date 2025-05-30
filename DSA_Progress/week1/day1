@@ -1,0 +1,7 @@
+#include<iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello DSA Week1 Problem1" << endl;
+    return 0;
+}
