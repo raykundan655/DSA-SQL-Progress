@@ -1,15 +1,13 @@
 // Today Task List
-
-
-
-
-
-
-
-
-
-
-
+// basic input/output 
+// datatype
+// keywords(const,hex,oct)
+// typecasting
+// operators
+// loops
+// function
+// pointer
+// array(1D)
 
 
 
@@ -243,4 +241,492 @@ int main(){
 
 // LOOP
 
+// For loop
+// syntex:
+// for(intilization;condition;updation){}
+
+
+// pattern printing
+
+// *
+// **
+// ***
+// ****
+// *****
+// ******
+
+#include<iostream>
+using namespace std;
+int main(){
+    int size;
+    cin>>size;
+    for(int i=0;i<=size;i++){
+        for(int j=0;j<=i;j++){
+            cout<<"*";
+        }
+        cout<<endl;
+    }
+}
+
+
+
+// * * * * *
+// * * * *
+// * * *
+// * *
+// *
+
+#include<iostream>
+using namespace std;
+int main(){
+    int size;
+    cin>>size;
+    for(int i=size;i>=0;i--){
+        for(int j=0;j<i;j++){
+            cout<<"*"<<" ";
+        }
+        cout<<endl;
+    }
+}
+
+
+// 1
+// 1 2
+// 1 2 3
+// 1 2 3 4
+
+
+#include<iostream>
+using namespace std;
+int main(){
+    int size;
+    cin>>size;
+    for(int i=1;i<=size;i++){
+        for(int j=1;j<=i;j++){
+            cout<<j<<" ";
+        }
+        cout<<endl;
+    }
+}
+
+
+//     *
+//    * *
+//   * * *
+//  * * * *
+// * * * * *
+
+
+#include<iostream>
+using namespace std;
+int main(){
+    int size;
+    cin>>size;
+    for(int i=0;i<size;i++){
+        for(int j=0;j<=size-i-1;j++){
+            cout<<" ";
+        }
+        for(int k=0;k<=i;k++){
+            cout<<"*"<<" ";
+        }
+        cout<<endl;
+    }
+
+}
+
+
+
+//     *
+//    * *
+//   * * *
+//    * *
+//     *
+
+
+#include<iostream>
+using namespace std;
+
+int main() {
+    int size;
+    cin >> size;
+
+    // Upper half
+    for (int i = 0; i < size; i++) {
+        if (i <= size / 2) {
+            // print spaces
+            for (int j = 0; j < size / 2 - i; j++) {
+                cout << " ";
+            }
+            // print stars
+            for (int k = 0; k < 2 * i + 1; k++) {
+                cout << "*";
+            }
+        } else {
+            // bottom half
+            for (int j = 0; j < i - size / 2; j++) {
+                cout << " ";
+            }
+            for (int k = 0; k < 2 * (size - i) - 1; k++) {
+                cout << "*";
+            }
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
+
+// while loop
+// Best is use when we don't know number of itration 
+// it is best for condition itration
+
+// syntex:
+// while(condition){
+
+// }
+
+// do while loop
+// syntex:
+// do{
+
+// }while(condtion);
+
+
+
+
+// Break/continue
+// Break key word use to break ingoing itration 
+// When the loop hits break, it stops immediately and jumps outside the loop.
+
+// continue 
+// To skip the current iteration and continue with the next one.
+
+
+
+
+
+// Functions
+
+// Note 
+
+// FORWARD DECLARATION
+// function  most of time  decalre above the main function because from main method function are called 
+// this is forward declaration(use karna se pehela bana liya )
+
+//  but  if you define the function after main(), you must declare it forward, using a function prototype.
+// prototype
+// return type function_name();
+
+
+// forward decl.
+#include<iostream>
+#include<string>
+using namespace std;
+
+void hello(string str){
+    cout<<"hello brother "<<str;
+}
+int main(){
+hello("mahi");
+}
+
+
+// prototype 
+#include<iostream>
+#include<string>
+using namespace std;
+
+void hello(string str);
+
+int main(){
+hello("mahi");
+}
+
+void hello(string str){
+    cout<<"hello brother "<<str;
+}
+
+
+
+
+
+
+// we can pass parameters to functions in three main ways
+
+
+// Pass by Value
+// A copy of the argument is passed.
+// Changes inside the function do not affect the original value.
+
+
+
+// Pass by Reference
+// A reference (alias) to the original variable is passed.
+// Changes inside the function do affect the original value.
+
+
+// Pass by Reference
+// A reference (alias) to the original variable is passed.
+// Changes inside the function do affect the original value.
+
+
+#include<iostream>
+using namespace std;
+
+void byValue(int a) {
+    a += 10;
+}
+
+void byReference(int &a) {
+    a += 10;
+}
+
+void byPointer(int *a) {
+    *a += 10;
+}
+
+int main() {
+    int x = 5;
+
+    byValue(x);
+    cout << "By Value: " << x << endl;  // 5
+
+    byReference(x);
+    cout << "By Reference: " << x << endl;  // 15
+
+    byPointer(&x);
+    cout << "By Pointer: " << x << endl;  // 25
+
+    return 0;
+}
+
+
+
+// #imp Note
+// In declaration: & creates a reference (alias) to a variable, so changes affect the original.(int &ref = var;)
+// When used before a variable, & gives the memory address of that variable..(int *p = &var;)
+
+
+// convertion of number into binary number
+#include<iostream>
+#include<vector>
+using namespace std;
+int main(){
+    int num;
+    cin>>num;
+vector<int>vec;
+    while(num>0){
+int rem=num%2;
+vec.push_back(rem);
+     num=num/2;
+    }
+    for(int i=vec.size()-1;i>=0;i--){
+        cout<<vec[i];
+    }
+}
+
+
+// convert binary to decimal
+
+#include<iostream>
+#include<math.h>
+#include<vector>
+using namespace std;
+int main(){
+    int num;
+    cin>>num;
+int i=0;
+int dec=0;
+while(num>0){
+    int rem=num%10;
+    dec+=rem*pow(2,i);
+    i++;
+    num=num/10;
+}
+cout<<dec;
+}
+
+
+// // direct function
+#include<iostream>
+#include<math.h>
+using namespace std;
+int main(){
+    int num=10;
+    cout<<hex<<num;
+    cout<<oct<<num;
+
+}
+
+
+
+
+
+// dataType modifier
+
+// long (int/double)
+// it is used to increse the size of data type
+// int only take the value from -32000 to +32000 but long will increase the limit
+
+
+// short int(only for int)
+// it decrese the memeory of int into 2 byte only 
+
+// long long int(only for int)
+// it will able to take more big size number
+
+// unsigned
+// only take non-negative number
+
+
+
+// POINTER
+// address operator &
+// it give the address of varibel
+// pointer is special variable that store the address of variable 
+
+// syntex
+// int * ptr=&var 
+
+
+// ptr is pointer that store the address of var 
+// data type of pointer indicate that which type of var address is store in this pomiter
+
+// pointer size is fixed 8byte
+
+
+// pointer of pointer
+
+// int ** a=&ptr;
+// a is pointer of pointer 
+
+
+
+// dereference operator(*)
+// it give the value of the var that is pointed by pointer
+
+// eg int a=5
+// int *ptr=&a
+// cout<<*ptr   ->5
+// give the val of the var whose address is store into ptr
+
+
+
+// type of pointer
+// wild pointer
+// int * ptr;
+// A pointer that has not been initialized. Dangerous because it points to a random location.
+
+
+// NULL pointer
+// A pointer that doesn’t point to any memory location.
+//  int * ptr=NULL;
+
+
+// Void Pointer (void*)
+// A general-purpose pointer that can point to any data type, but needs to be typecast before use.
+
+// void* ptr;
+// int a = 10;
+// ptr = &a;  // valid
+
+
+
+
+
+// Array
+
+// syntex int arr[no of element]
+
+// for finding the size of array
+// size=sizeof(array)/sizeof(array[0])
+
+// int arr[5];
+// it resereve 5*4=20byte 
+// first index arr[0]=4byte 
+// 20/4=5 no of element
+
+// name of array act as reference it give the address of base element(first element)
+
+#include<iostream>
+using namespace std;
+int main(){
+    int arr[5]={5,5,8,7,6};
+    cout<<*arr;
+    for(int i=0;i<5;i++){
+        cout<<*(arr+i);
+    }
+//     // this plus in address not increse the address by i it increase it by by (address+(i*datatypeSize))
+
+
+// }
+
+// when we pass the array into function it pass through pass by reference
+
+// function(int arr[])
+// function(int * arr)
+// both are same 
+
+// Note!!
+// remeber that when you pass the array you have to pass the size of array also because in function it only pinter toward base address they don't have full array
+
+// When you pass an array to a function in C++, what actually gets passed is a pointer to the first element (i.e., the base address), not the entire array itself.
+// So the function does not know the size of the array unless you pass it separately.
+
+
+
+// reverse the array
+
+#include<iostream>
+using namespace  std;
+
+void reverse(int arr[],int size){
+    for(int i=0;i<size/2;i++){
+     int  temp=arr[i];
+     arr[i]=arr[size-1-i];
+     arr[size-1-i]=temp;
+}
+
+}
+int main(){
+    int arr[5]={5,6,7,8,9};
+    reverse(arr,5);
+    for(int i=0;i<5;i++){
+        cout<<arr[i];
+    }
+}
+
+
+
+
+// Binary Search
+
+#include<iostream>
+using namespace std;
+int main(){
+    int arr[5]={2,3,5,8,9};
+    int key=9;
+int st=0;
+int end=5-1;
+while(st<=end){
+    int mid=(st+end)/2;
+    if(arr[mid]==key){
+        cout<<"found"<<endl;
+       return 0;
+    }
+    else if(key>arr[mid]){
+        st=mid+1;
+
+    }
+    else if(key<arr[mid]){
+        end=mid-1;
+    }
+
+}
+cout<<"element not present "<<endl;
+return 0;
+
+}
 
