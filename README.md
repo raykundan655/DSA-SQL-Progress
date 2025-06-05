@@ -5,16 +5,17 @@ What This Repository Contains:
 
 
 📌 DSA Problems in C++
+
 Solved problems categorized by topic:
-Arrays
-Strings
-Recursion
-Linked Lists
-Stack
-Queue
-Trees (Binary Trees, BSTs, etc.)
-Hashing
-Heap
+Arrays,
+Strings,
+Recursion,
+Linked Lists,
+Stack,
+Queue,
+Trees (Binary Trees, BSTs, etc.),
+Hashing,
+Heap,
 
 Each solution includes:
 Problem statement
@@ -23,7 +24,7 @@ Clean, well-commented C++ code
 
 🧠 SQL Practice
 Common SQL queries with examples:
-SELECT, WHERE, ORDER BY
+SELECT, WHERE, ORDER BY,
 JOIN (INNER, LEFT, RIGHT)
 GROUP BY, HAVING, COUNT, SUM, etc.
 
