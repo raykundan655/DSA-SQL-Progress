@@ -192,3 +192,26 @@ public:
 // in nums1 vector already space given for nums2 element as zero we have to put nums2 element in place of zero then sort
 // and this thing i missed after sometime i relised
 
+
+// 287. Find the Duplicate Number
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+      int count=1;
+        for(int i=1;i<nums.size();i++){
+            // If the current number equals the previous one, it means a duplicate is found, so count is incremented.If not, it resets count to 1.
+            if(nums[i-1]==nums[i]){
+                count++;
+            }
+            else{
+                count=1;
+            }
+            if(count==2){
+                return nums[i];
+            }
+        }
+        return nums[0];
+    }
+};
+
