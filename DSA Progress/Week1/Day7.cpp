@@ -324,3 +324,102 @@ public:
 
     
 };
+
+// 657. Robot Return to Origin
+// There is a robot starting at the position (0, 0), the origin, on a 2D plane. Given a sequence of its moves, judge 
+// if this robot ends up at (0, 0) after it completes its moves.
+// You are given astring moves that represents the move sequence of the robot where moves[i] represents
+// its ith move. Valid moves are 'R' (right), 'L' (left), 'U' (up), and 'D' (down).
+
+class Solution {
+public:
+    bool judgeCircle(string moves) {
+     int   xorigin=0;
+      int  yorigin=0;
+        for(int i=0;i<moves.size();i++){
+            char ch=tolower(moves[i]);
+            if(ch=='u'){
+                yorigin++;
+            }
+            else if(ch=='d'){
+                yorigin--;
+            }
+            else if(ch=='l'){
+                xorigin++;
+            }
+            else if(ch=='r'){
+                xorigin--;
+            }
+        }
+        if(xorigin==0 && yorigin==0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+};
+
+
+
+917. Reverse Only Letters
+class Solution {
+public:
+    string reverseOnlyLetters(string s) {
+        int st=0;
+        int end=s.size()-1;
+        while(st<=end){
+           
+            if(!isalpha(s[st])){
+                st++;
+                continue;
+            }
+            if(!isalpha(s[end])){
+                end--;
+                continue;
+            }
+            
+                swap(s[st],s[end]);
+                st++;
+                end--;
+            
+        }
+        return s;
+    }
+};
+
+// 1678. Goal Parser Interpretation
+
+class Solution {
+public:
+    string interpret(string co) {
+        string result="";
+        for(int i=0;i<co.size();){
+            if(co[i]=='(' && co[i+1]==')'){
+                result+='o';
+                // ()==O +2
+                i+=2;
+                // +2 for move the indices 
+                
+            }
+            else if(co[i]=='('){
+                string temp="";
+                i++;
+                // move the index of (
+                while(co[i]!=')'){
+                    temp+=co[i];
+                    i++;
+                }
+                result+=temp;
+                i++;
+            }
+            else{
+            result+=co[i];
+            i++;
+            
+            }
+        }
+        return result;
+    }
+};
+
