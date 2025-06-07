@@ -204,7 +204,7 @@ public:
 };
 
 
-// 643. Maximum Average Subarray I
+// 643. Maximum Average Subarray I(fixed size sliding window)
 
 class Solution {
 public:
@@ -223,6 +223,102 @@ public:
     }
 };
 
+// 1004. Max Consecutive Ones III
+
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        int st=0;
+        int end=0;
+        int maxs=0;
+        int countzero=0;
+       
+        for(int i=end;i<nums.size();i++){
+          
+       if(nums[i]==0){
+         countzero++;
+           // count the zero in b/w st and end 
+       }
+            // if it exced the limit then then  make it into limit 
+       while(countzero>k){
+        if(nums[st]==0){
+            countzero--;
+        }
+        st++;
+       }
+       int e=end-st+1;
+       maxs=max(e,maxs);
+       end++;
+
+        }
+        return maxs;
+    }
+};
+
+// 350. Intersection of Two Arrays II
+
+
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        vector<int>vec;
+        int l1=nums1.size();
+        int l2=nums2.size();
+        if(l1<=l2){
+            for(int i=0;i<nums1.size();i++){
+                for(int j=0;j<nums2.size();j++){
+                    if(nums1[i]==nums2[j]){
+                        vec.push_back(nums2[j]);
+                        nums2.erase(nums2.begin()+j);
+                        break;
+                    }
+                }
+            }
+        }
+        else{
+             for(int i=0;i<nums2.size();i++){
+                for(int j=0;j<nums1.size();j++){
+                    if(nums1[j]==nums2[i]){
+                        vec.push_back(nums1[j]);
+                        nums1.erase(nums1.begin()+j);
+                        break;
+                    }
+                }
+            }
+
+        }
+        return vec;
+    }
+};
+
+
+
+// optimize
+
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> vec;
+
+        // Always iterate over the smaller array, erase from the larger one
+        if (nums1.size() > nums2.size()) {
+            swap(nums1, nums2);  // Ensures we erase from nums2
+            // it swap the data content
+        }
+
+        for (int i = 0; i < nums1.size(); i++) {
+            for (int j = 0; j < nums2.size(); j++) {
+                if (nums1[i] == nums2[j]) {
+                    vec.push_back(nums2[j]);
+                    nums2.erase(nums2.begin() + j); // Remove matched element
+                    break; // Move to next nums1[i]
+                }
+            }
+        }
+
+        return vec;
+    }
+};
 
 
 
