@@ -290,5 +290,73 @@ int main(){
    cout<<ll.find(20); 
 }
 
+// reverse the linklist
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node * next;
+    node(int val){
+        data=val;
+        next=nullptr;
+    }
+};
+class list{
+    node * head=nullptr;
+    public:
+    void push_front(int val){
+        node * newnode=new node(val);
+        if(head==nullptr){
+            head=newnode;
+        }
+        else{
+            newnode->next=head;
+            head=newnode;
+        }
+    }
+    void reverse(){
+        if(head==nullptr){
+            return;
+        }
+        else{
+            node * curr=head;
+            node * prev=nullptr;
+            while(curr!=nullptr){
+                node * next=curr->next;
+                // next store next address
+                curr->next=prev;
+                prev=curr;
+                curr=next;
+                // curr ponit to next address
+            }
+            head=prev;
+            // prev is on last node now
+        }
+    }
+    void print(){
+        if(head==nullptr){
+            return;
+        }
+        else{
+            node * ptr=head;
+            while(ptr!=nullptr){
+                cout<<ptr->data<<" ";
+                ptr=ptr->next;
+            }
+        }
+    }
+};
+int main(){
+    list ll;
+    ll.push_front(5);
+    ll.push_front(10);
+    ll.push_front(15);
+    ll.print();
+    ll.reverse();
+    cout<<endl;
+    ll.print();
+}
+
 
 
