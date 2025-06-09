@@ -322,6 +322,183 @@ public:
 
 
 
+// wap to find largest element with ll 
+#include<iostream>
+#include<climits>
+using namespace std;
+class node{
+    public:
+    int data;
+    node * next;
+    node(int val){
+        data=val;
+        next=nullptr;
+    }
+};
+class list{
+    node * head=nullptr;
+    public:
+    void push_back(int val){
+    node * newnode=new node(val);
+    if(head==nullptr){
+        head=newnode;
+    }
+    else{
+        node * temp=head;
+        while(temp->next!=nullptr){
+            temp=temp->next;
+        }
+        temp->next=newnode;
+    }
+    }
+    int largest(){
+        if(head==nullptr){
+            return -1;
+        }
+        else{
+            int val=INT_MIN;
+            node * temp=head;
+            while(temp!=nullptr){
+                if(temp->data>val){
+                    val=temp->data;
+                }
+                temp=temp->next;
+            }
+            return val;
+        }
+    }
+};
+int main(){
+    list ll;
+    ll.push_back(10);
+    ll.push_back(15);
+    cout<<ll.largest();
+}
 
 
+// wrt a program to delete node from linked list for a particular pos
 
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node * next;
+    node(int val){
+        data=val;
+        next=nullptr;
+    }
+};
+class list{
+node * head=nullptr;
+public:
+void push_front(int val){
+    node * newnode=new node(val);
+    if(head==nullptr){
+        head=newnode;
+    }
+    else{
+        newnode->next=head;
+        head=newnode;
+    }
+}
+void deleteelement(int pos){
+if(head==nullptr){
+    return;
+}
+else{
+    node * temp=head;
+    for(int i=1;i<pos-1;i++){
+        temp=temp->next;
+    }
+    temp->next=temp->next->next;
+}
+}
+void print(){
+    if(head==nullptr){
+        return;
+    }
+    else{
+        node * temp=head;
+        while(temp!=nullptr){
+            cout<<temp->data<<" ";
+            temp=temp->next;
+        }
+    }
+}
+};
+int main(){
+    list ll;
+    ll.push_front(10);
+    ll.push_front(15);
+      ll.push_front(20);
+    ll.push_front(15);
+    ll.print();
+    ll.deleteelement(3);
+    cout<<endl;
+    ll.print();
+}
+
+// wrt a program to delete node from linked list for a particular val
+
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node * next;
+    node(int val){
+        data=val;
+        next=nullptr;
+    }
+};
+class list{
+    node * head=nullptr;
+    public:
+    void push_front(int val){
+    node * newnode=new node(val);
+    if(head==nullptr){
+        head=newnode;
+    }
+    else{
+        newnode->next=head;
+        head=newnode;
+    }
+}
+void deleteelement(int val){
+if(head==nullptr){
+    return;
+}
+else{
+    node * temp=head;
+    while(temp->next->data!=val){
+        temp=temp->next;
+    }
+    temp->next=temp->next->next;
+    
+}
+}
+void print(){
+    if(head==nullptr){
+        return;
+    }
+    else{
+        node * temp=head;
+        while(temp!=nullptr){
+            cout<<temp->data<<" ";
+            temp=temp->next;
+        }
+    }
+}
+};
+int main(){
+    list ll;
+    ll.push_front(10);
+    ll.push_front(15);
+      ll.push_front(20);
+    ll.push_front(15);
+    ll.print();
+    ll.deleteelement(15);
+    cout<<endl;
+    ll.print();
+}
