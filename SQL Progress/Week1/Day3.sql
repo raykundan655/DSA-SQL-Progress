@@ -111,6 +111,53 @@ select name,roll_no,(fees*0.18) as gst_amount from student;
 -- AGGREGATE FUNCTION
 
 
+-- is function that take multiple input and return singal output
+-- eg:
+-- in fess col have vales(1200,1300,12000,25000,...)
+-- sum(fees) it will sum all the value and return total val(singal output)
+-- in sql there is 5 aggregate function
+
+-- Function	    What It Does                     	Example
+-- COUNT()	    Counts number of rows	            COUNT(*)
+-- SUM()	      Adds all values in a column	       SUM(marks)
+-- AVG()	     Finds average of values	           AVG(marks)
+-- MAX()      	Finds highest value	              MAX(marks)  max val will return of the col
+-- MIN()	     Finds lowest value	                MIN(marks)  min val of col will retun 
+
+
+select count(roll_no) as no_of_student from student
+-- count all rows of roll_no col and return the result with name no_of_student
+
+select count(distinct name) as name_count from student
+-- it will count only distinct row no base on name
+
+select sum(price) as total_price from student
+-- it will sum the value of price col and return
+
+select avg(price) as average_price from student
+-- calculate the average of price col->sum(price)/count(price)
+
+
+select min(price) as min_amount from student
+-- give min price
+
+
+
+
+
+-- NOTE FOR FUTURE DAYS!!
+-- In a subquery, the SELECT statement does not display anything —
+-- it fetches the value and returns it to the outer query (like a variable).
+-- Subquery is like a function → it runs, gets a value, and returns it to be used somewhere.
+
+
+  
+  --  the Main Query, the SELECT statement:
+-- Fetches data from the table and then displays (returns) the result to the user.
+
+--  So in simple words:
+-- 🔸 Main query SELECT = Fetch + Display (Return to screen)
+-- 🔸 Subquery SELECT = Fetch + Return (Used by main query, not displayed)
 
 
 
