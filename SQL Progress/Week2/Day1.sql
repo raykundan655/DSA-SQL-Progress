@@ -99,4 +99,104 @@ FROM Employees as e
 LEFT JOIN 
 EmployeeUNI as ee ON e.id=ee.id ;
 
+--6
+-- Table: Sales
+-- +-------------+-------+
+-- | Column Name | Type  |
+-- +-------------+-------+
+-- | sale_id     | int   |
+-- | product_id  | int   |
+-- | year        | int   |
+-- | quantity    | int   |
+-- | price       | int   |
+-- +-------------+-------+
+-- (sale_id, year) is the primary key (combination of columns with unique values) of this table.
+-- product_id is a foreign key (reference column) to Product table.
+-- Each row of this table shows a sale on the product product_id in a certain year.
+-- Note that the price is per unit.
+ 
+-- Table: Product
+-- +--------------+---------+
+-- | Column Name  | Type    |
+-- +--------------+---------+
+-- | product_id   | int     |
+-- | product_name | varchar |
+-- +--------------+---------+
+-- product_id is the primary key (column with unique values) of this table.
+-- Each row of this table indicates the product name of each product.
+ 
 
+-- Write a solution to report the product_name, year, and price for each sale_id in the Sales table
+
+SELECT product_name,year,price 
+FROM product as p 
+inner join 
+sales as s on s.product_id=p.product_id;
+
+--7
+-- Table: Visits
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | visit_id    | int     |
+-- | customer_id | int     |
+-- +-------------+---------+
+-- visit_id is the column with unique values for this table.
+-- This table contains information about the customers who visited the mall.
+ 
+-- Table: Transactions
+-- +----------------+---------+
+-- | Column Name    | Type    |
+-- +----------------+---------+
+-- | transaction_id | int     |
+-- | visit_id       | int     |
+-- | amount         | int     |
+-- +----------------+---------+
+-- transaction_id is column with unique values for this table.
+-- This table contains information about the transactions made during the visit_id.
+--  Write a solution to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.
+
+select  customer_id,count(*)  as count_no_trans
+from Visits as v
+left join
+Transactions as t 
+on 
+v.visit_id =t.visit_id 
+where transaction_id is null
+group by v.customer_id ;
+
+--8(done by chatgpt)
+-- Table: Weather
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | id            | int     |
+-- | recordDate    | date    |
+-- | temperature   | int     |
+-- +---------------+---------+
+-- id is the column with unique values for this table.
+-- There are no different rows with the same recordDate.
+-- This table contains information about the temperature on a certain day.
+--  Write a solution to find all dates' id with higher temperatures compared to its previous dates (yesterday).
+
+
+SELECT w1.id
+FROM Weather w1
+JOIN Weather w2
+  ON DATEDIFF(w1.recordDate, w2.recordDate) = 1
+WHERE w1.temperature > w2.temperature;
+
+-- Weather AS w1   -- represents today
+-- Weather AS w2   -- represents yesterday
+-- Now, you join them with:
+-- ON DATEDIFF(w1.recordDate, w2.recordDate) = 1
+-- Step 1: Join the table with itself using DATEDIFF = 1
+-- That gives us:
+-- w1.date = 2023-06-11, w2.date = 2023-06-10 → ✅ (1 day apart)
+-- w1.date = 2023-06-12, w2.date = 2023-06-11 → ✅
+-- w1.date = 2023-06-13, w2.date = 2023-06-12 → ✅
+
+-- Step 2: Now check if:
+-- 25 > 20 → ✅ (keep id 2)
+-- 22 > 25 → ❌ (skip)
+-- 27 > 22 → ✅ (keep id 4)
