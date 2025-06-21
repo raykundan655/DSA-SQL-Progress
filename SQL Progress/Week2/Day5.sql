@@ -116,4 +116,31 @@ from Transactions
 group by concat(year(trans_date),'-',lpad(month(trans_date),2,0))
 ,country
 order by month,country;
+
+
+-- Table: Delivery
+-- +-----------------------------+---------+
+-- | Column Name                 | Type    |
+-- +-----------------------------+---------+
+-- | delivery_id                 | int     |
+-- | customer_id                 | int     |
+-- | order_date                  | date    |
+-- | customer_pref_delivery_date | date    |
+-- +-----------------------------+---------+
+-- delivery_id is the column of unique values of this table.
+-- The table holds information about food delivery to customers that make orders at some date and specify a preferred delivery date (on the same order date or after it).
  
+-- If the customer's preferred delivery date is the same as the order date, then the order is called immediate; otherwise, it is called scheduled.
+-- The first order of a customer is the order with the earliest order date that the customer made. It is guaranteed that a customer has precisely one first order.
+-- Write a solution to find the percentage of immediate orders in the first orders of all customers, rounded to 2 decimal places.
+-- The result format is in the following example.
+
+select round( (sum(case when datediff(order_date,customer_pref_delivery_date)=0 then 1 else 0 end )*100/count(*)),2) as immediate_percentage 
+from  Delivery  as d
+where 
+-- Even if multiple rows belong to the same customer, only those whose order_date exactly matches the min are included.
+-- current le jo customer date hai ush ka order date min se match ho raha ?
+order_date=(select min(order_date) from Delivery where customer_id=d.customer_id  )
+-- This is a correlated subquery, because the inner query depends on each row of the outer query.
+-- Specifically, it uses d.customer_id from the outer query.
+-- So MySQL will execute the inner query once for every row in the outer query.
