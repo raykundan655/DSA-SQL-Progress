@@ -1,4 +1,4 @@
-/ creating the stack by using two queue
+// / creating the stack by using two queue
 
 #include<iostream>
 #include<queue>
