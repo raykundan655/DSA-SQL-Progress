@@ -42,3 +42,34 @@ select x,y,z ,case
   end as triangle 
   from Triangle;
 
+
+-- Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+-- station
+-- id number
+-- city varchar
+-- state varchar
+-- lat_n  num
+-- long_n  num
+
+select distinct city from 
+ STATION where 
+ lower(city) like 'a%' or
+ lower(city) like 'e%' or
+ lower(city) like 'i%' or
+ lower(city) like 'o%' or
+ lower(city) like 'u%' ;
+
+
+-- or
+-- find city that end with vowel
+
+SELECT DISTINCT city 
+FROM STATION
+WHERE 
+LOWER(city) LIKE '%a'  OR
+LOWER(city) LIKE '%e'  OR
+LOWER(city) LIKE '%i'  OR
+LOWER(city) LIKE '%u'  OR
+LOWER(city) LIKE '%o';
+
+
