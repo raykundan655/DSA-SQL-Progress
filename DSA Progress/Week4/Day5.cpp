@@ -51,3 +51,28 @@ public:
     }
 };
 
+// 238. Product of Array Except Self
+// brute force(issue tc)
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        vector<int>pre;
+        vector<int>vec;
+        for(int i=0;i<nums.size();i++){
+            int pro=1;
+            for(int j=i+1;j<nums.size();j++){
+                pro*=nums[j];
+            }
+            if(!pre.empty()){
+                for(int k=0;k<pre.size();k++){
+                    pro*=pre[k];
+                }
+            }
+            vec.push_back(pro);
+            pre.push_back(nums[i]);
+        }
+        return vec;
+    }
+      
+};
+
