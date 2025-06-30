@@ -14,3 +14,29 @@ public:
        
     }
 };
+
+// 1365. How Many Numbers Are Smaller Than the Current Number
+
+class Solution {
+public:
+    vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
+          int size=nums.size();
+        
+    vector<int>ans;
+        int count;
+        for(int i=0;i<size;i++){
+            count=0;
+            for(int j=0;j<size;j++){
+                
+                if(nums[j]<nums[i]){
+                    count++;
+                }
+            }
+            ans.push_back(count);
+           
+          }
+          return ans;
+        
+    }
+};
+
