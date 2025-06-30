@@ -154,6 +154,26 @@ void postorder(node * root){
 
 }
 
+void lavelOrder(node * root){
+    if(root==nullptr){
+        return;
+    }
+    queue<node*>q;
+    q.push(root);
+    while(!q.empty()){
+        node * curr=q.front();
+        cout<<curr->data;
+        q.pop();
+        if(curr->left!=nullptr){
+            q.push(curr->left);
+        }
+        if(curr->right!=nullptr){
+            q.push(curr->right);
+        }
+    }
+}
+
+
 int main(){
     vector<int>vec{1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
     node* root=buildingTree(vec);
@@ -162,12 +182,15 @@ int main(){
     inorder(root);
     cout<<endl;
     postorder(root);
+     cout<<endl;
+     lavelOrder(root)
 
 }
 
 // /Creating the Binary data(another way)
 
 #include<iostream>
+#include<queue>
 using namespace std;
 class node{
     public:
@@ -217,6 +240,24 @@ void postorder(node * root){
     postorder(root->right);
     cout<<root->data;
 }
+void lavelOrder(node * root){
+    if(root==nullptr){
+        return;
+    }
+    queue<node*>q;
+    q.push(root);
+    while(!q.empty()){
+        node * curr=q.front();
+        cout<<curr->data;
+        q.pop();
+        if(curr->left!=nullptr){
+            q.push(curr->left);
+        }
+        if(curr->right!=nullptr){
+            q.push(curr->right);
+        }
+    }
+}
 
 int main(){
     node * root=buildTree();
@@ -226,6 +267,8 @@ int main(){
     inorder(root);
     cout<<endl;
     postorder(root);
+    cout<<endl;
+    lavelOrder(root)
 }
 
 
