@@ -103,7 +103,89 @@ int main(){
     }
     t.preorder();
 }
+// find min and max val node from binary Tree
+#include<iostream>
+#include<algorithm>
+#include<climits>
+using namespace std;
+class node{
+    public:
+    int data;
+    node * left,*right;
+    node(int val){
+        data=val;
+        left=right=nullptr;
+    }
+};
 
+node * BuildBinaryTree(){
+    int val;
+    cin>>val;
+    if(val==-1){
+        return nullptr;
+    }
+    node * newnode=new node(val);
+    newnode->left=BuildBinaryTree();
+    newnode->right=BuildBinaryTree();
+    return newnode;
+}
+
+// finding max and min by this is not good practice in tree
+// int maxxx=INT_MIN;
+// void maxx(node * root){
+//     if(root==nullptr){
+//         return;
+//     }
+//     if(maxxx<root->data){
+//        maxxx=root->data;
+//     }
+//     maxx(root->left);
+//     maxx(root->right);
+// }
+// int minnn=INT_MAX;
+// void minn(node *root){
+//     if(root==nullptr){
+//         return;
+//     }
+//     if(minnn>root->data){
+//         minnn=root->data;
+//     }
+//     minn(root->left);
+//     minn(root->right);
+// }
+
+// done by recussion and best method 
+
+int maxx(node * root){
+    if(root==nullptr){
+        return INT_MIN;
+    }
+    int leftval=maxx(root->left);
+    int rightval=maxx(root->right);
+
+    return max(root->data,max(leftval,rightval));
+}
+
+int minn(node *root){
+    if(root==nullptr){
+        return INT_MAX;
+    }
+   int leftval=minn(root->left);
+   int rightval=minn(root->right);
+   return min(root->data,min(leftval,rightval));
+}
+
+
+int main(){
+    node *root=BuildBinaryTree();
+    maxx(root);
+    // minn(root);
+    // cout<<maxxx<<endl;
+    // cout<<minnn;
+
+    cout<<maxx(root);
+    cout<<minn(root);
+}
 
 // Binary Search Tree
 // A Binary Search Tree is a type of binary tree where each node has at most two children, and it follows a special property:
