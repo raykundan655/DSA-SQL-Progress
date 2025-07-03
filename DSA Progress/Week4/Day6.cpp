@@ -63,3 +63,24 @@ public:
     return nums;
     }
 };
+
+// 1108. Defanging an IP Address
+
+class Solution {
+public:
+    string defangIPaddr(string address) {
+        // size_t can represent larger positive values than int.
+        size_t pos=0;
+        string rep="[.]";
+
+// string::npos is a constant in C++ that represents “no position” or “not found” when searching within a string.
+        while((pos=address.find(".",pos))!=string::npos){
+            // string& replace (size_t pos, size_t len, const string& str);
+
+            address.replace(pos,1,rep);
+            pos+=rep.size();
+        }
+        return address;
+
+    }
+};
