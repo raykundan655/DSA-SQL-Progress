@@ -84,3 +84,38 @@ public:
 
     }
 };
+
+// 1752. Check if Array Is Sorted and Rotated
+
+class Solution {
+public:
+    bool check(vector<int>& nums) {
+        int k=0;
+        for(int i=0;i<nums.size();i++){
+                bool flag=true;
+                for(int j=0;j<nums.size()-1;j++){
+                    if(nums[j]>nums[j+1]){
+                        flag=false;
+                    }
+                }
+
+                if(flag==false){
+                    int num=nums[0];
+                    for(int i=0;i<nums.size()-1;i++){
+                        nums[i]=nums[i+1];
+                    }
+                    nums[nums.size()-1]=num;
+                }
+
+                if(flag==true){
+                    return true;
+                }
+
+
+        }
+        return false;
+
+
+    }
+};
+
