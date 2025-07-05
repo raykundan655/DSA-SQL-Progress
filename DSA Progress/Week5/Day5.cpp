@@ -293,6 +293,7 @@ class Tree{
         node *last;
         while(!q.empty()){
             last=q.front();
+     // store the node that is key
             q.pop();
             if(last->data==key){
                 break;
@@ -306,10 +307,13 @@ class Tree{
         }
 
         node *rightmost=findright(root);
+            // find right most node of tree
 
         last->data=rightmost->data;
+            // replace with rightmost node 
 
         deleterightmost(rightmost);
+            delete rightmost node
 
 
      }
@@ -379,7 +383,3 @@ int main(){
     t1.inorder();
 
 }
-
-
-
-
