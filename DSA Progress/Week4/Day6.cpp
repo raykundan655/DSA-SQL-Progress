@@ -119,3 +119,37 @@ public:
     }
 };
 
+// 1394. Find Lucky Integer in an Array
+
+class Solution {
+public:
+    int findLucky(vector<int>& arr) {
+      sort(arr.begin(),arr.end());
+      int freq=1;
+      int ind=-1;
+      for(int i=1;i<arr.size();i++){
+        if(arr[i-1]==arr[i]){
+            freq+=1;;
+        }
+        else{
+            if(arr[i-1]==freq){
+               ind=arr[i-1];;
+           
+            }
+             freq=1;
+        }
+
+      }
+
+       if(arr.back() == freq) {
+            ind = arr.back();
+        }
+
+      if(ind!=-1)
+      return ind;
+      else{
+        return ind;
+      }
+    }
+};
+
