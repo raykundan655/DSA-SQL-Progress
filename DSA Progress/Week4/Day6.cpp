@@ -153,3 +153,119 @@ public:
     }
 };
 
+// 1865. Finding Pairs With a Certain Sum
+// (brute force) t.c issue
+class FindSumPairs {
+    
+public:
+vector<int>&vec1;
+vector<int>&vec2;
+    FindSumPairs(vector<int>& nums1, vector<int>& nums2):vec1(nums1),vec2(nums2) {
+        // can not intilized the reference data memeber from constructor
+        
+    }
+    
+    void add(int index, int val) {
+        vec2[index]+=val;
+        
+    }
+    
+    int count(int tot) {
+        int count=0;
+        for(int i=0;i<vec1.size();i++){
+            for(int j=0;j<vec2.size();j++){
+                if(vec1[i]+vec2[j]==tot){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+
+
+
+};
+
+/**
+ * Your FindSumPairs object will be instantiated and called as such:
+ * FindSumPairs* obj = new FindSumPairs(nums1, nums2);
+ * obj->add(index,val);
+ * int param_2 = obj->count(tot);
+ */
+
+// another approch(still issue t.c)
+
+class FindSumPairs {
+    
+public:
+vector<int>&vec1;
+vector<int>&vec2;
+    FindSumPairs(vector<int>& nums1, vector<int>& nums2):vec1(nums1),vec2(nums2) {
+        // can not intilized the reference data memeber from constructor
+        
+    }
+    
+    void add(int index, int val) {
+        vec2[index]+=val;
+        
+    }
+    
+    int count(int tot) {
+        unordered_map<int, int> freq;
+        for (int num : vec2) {
+            freq[num]++;
+        }
+
+        int count = 0;
+        for (int i = 0; i < vec1.size(); i++) {
+            int need = tot - vec1[i];
+            count += freq[need];
+        }
+        return count;
+    }
+    
+
+
+
+
+};
+
+/**
+ * Your FindSumPairs object will be instantiated and called as such:
+ * FindSumPairs* obj = new FindSumPairs(nums1, nums2);
+ * obj->add(index,val);
+ * int param_2 = obj->count(tot);
+ */
+
+
+// correct approch (think again)
+class FindSumPairs {
+public:
+    vector<int> numsA,numsB;
+    unordered_map<int,int> cnt;
+    FindSumPairs(vector<int>& nums1, vector<int>& nums2) {
+        numsA=nums1;
+        numsB=nums2;
+        for(auto j:numsB)   cnt[j]++;
+    }
+    
+    void add(int index, int val) {
+        cnt[numsB[index]]--;
+        numsB[index]+=val;
+        cnt[numsB[index]]++;
+    }
+    
+    int count(int tot) {
+        int ans=0;
+        for(auto k:numsA)   ans+=cnt[tot-k];
+        return ans;
+    }
+};
+
+/**
+ * Your FindSumPairs object will be instantiated and called as such:
+ * FindSumPairs* obj = new FindSumPairs(nums1, nums2);
+ * obj->add(index,val);
+ * int param_2 = obj->count(tot);
+ */
