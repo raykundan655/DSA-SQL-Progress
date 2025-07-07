@@ -199,3 +199,55 @@ vector<int>vec;
         vec.push_back(root->val);
     }
 };
+
+
+
+// learnig question(1353)
+// You are given an array of events where events[i] = [startDayi, endDayi]. Every event i starts at startDayi and ends at endDayi.
+// You can attend an event i at any day d where startTimei <= d <= endTimei. You can only attend one event at any time d.
+// Return the maximum number of events you can attend.
+
+
+// events= [[1,2],[2,3],[3,4],[1,2]]
+// Output: 4
+
+class Solution {
+public:
+//      bool compare(vector<int> a, vector<int> b) {
+//     return a[1] < b[1];
+// }
+      int maxEvents(vector<vector<int>>& events) {
+       
+       sort(events.begin(), events.end(), compare);
+
+
+// With a lambda, you don’t need to write that function separately:
+        sort(events.begin(),events.end(),[](vector<int>a,vector<int>b){
+            // sorting the end in descending order
+            return a[1]<b[1];
+        });
+
+
+         bool day[100001]={false};
+        //  checking for available day
+
+         int count=0;
+
+         for(int i=0;i<events.size();i++){
+            int st=events[i][0];
+            int end=events[i][1];
+            
+            for(int j=st;j<=end;j++){
+                if(!day[j]){
+                    // if day available then true and count++
+                    count++;
+                    day[j]=true;
+                    break;
+                }
+            }
+         }
+         return count;
+    }
+};
+ 
+
