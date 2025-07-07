@@ -218,7 +218,7 @@ public:
 // }
       int maxEvents(vector<vector<int>>& events) {
        
-       sort(events.begin(), events.end(), compare);
+       // sort(events.begin(), events.end(), compare);
 
 
 // With a lambda, you don’t need to write that function separately:
