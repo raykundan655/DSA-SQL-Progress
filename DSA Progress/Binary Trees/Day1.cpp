@@ -52,6 +52,17 @@
  // Tree Traversal Methods
 // Traversal = visiting all nodes.
 
+/*Type of Tree Traversal:
+1. Depth-First Search (DFS):
+   - Pre-order: Visit root, then left subtree, then right subtree.  [Root → Left → Right]
+   - In-order: Visit left subtree, then root, then right subtree.  [Left → Root → Right]
+   - Post-order: Visit left subtree, then right subtree, then root.  [Left → Right → Root]
+
+2. Breadth-First Search (BFS):
+   - Level-order: Visit nodes level by level from top to bottom, left to right. Using Queue
+
+*/
+
 1. Inorder Traversal(Left → Root → Right)
 // Note!!
 // For BSTs, gives sorted order.
