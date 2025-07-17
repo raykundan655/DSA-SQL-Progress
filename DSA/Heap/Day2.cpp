@@ -397,4 +397,116 @@ h1.display();
 }
 
 
+//Delation with the help of heapify function
+
+#include<iostream>
+using namespace std;
+
+class heap{
+    int data[100];
+    int size=0;
+
+    public:
+
+// Heapify work on top to bottom approch
+// It means that the heapify algorithm starts from a node (usually a parent) and goes downward,
+// comparing it with its children, and pushing it down the tree if needed — until the heap property is satisfied.
+
+// How:
+// You start at a node (often the root or some internal node).
+// You compare it with its children.
+// If the node violates the heap property, you swap it with the larger child (in a max-heap).
+// Then, you continue this process at the new child index.
+// This continues down the tree — hence, top to bottom
+
+
+    void heapify(int size,int ind){
+        int largest=ind;
+        int leftchild=2*ind+1;
+        int rightchild=2*ind+2;
+
+        if(leftchild<size && data[leftchild]>data[largest]){
+            largest=leftchild;
+        }
+        if(rightchild<size && data[rightchild]>data[largest]){
+            largest=rightchild;
+        }
+
+        if(largest!=ind){
+            swap(data[largest],data[ind]);
+            heapify(size,largest);
+        }
+    }
+
+
+    // INSERTION->BUTTOM->TOP APPROCH
+    // Add the element at the end of the array (which represents the heap).
+
+    // HOW:
+    // The heap may now violate the heap property, so:
+    // Compare the inserted element with its parent.
+    // If it's greater than the parent → swap them.
+    // Repeat this until:
+    // The element is not greater than its parent, or
+    // It becomes the root.
+    // This is called SIFT-UP or BUBBLE-UP, and it moves bottom to top.
+
+
+   void insert(int val){
+        int ind=size;
+        size++;
+        data[ind]=val;
+        // Sift up to maintain max-heap
+        // NOTE
+        // insertion done ->Bottom to top ↑->	Fix heap property upward
+        // heapify work with only top to bottom approch
+
+       while (ind > 0) {
+    int parent = (ind - 1) / 2;
+    if (data[parent] < data[ind]) {
+        swap(data[parent], data[ind]);
+        ind = parent;
+    } else {
+        break;
+    }
+}
+
+
+    }
+
+    void display(){
+        for(int i=0;i<size;i++){
+            cout<<data[i]<<" ";
+        }
+
+    }
+
+    void deleteNode(){
+        data[0]=data[size-1];
+
+        size--;
+
+        heapify(size,0);
+    }
+};
+int main(){
+    heap h1;
+
+    while(true){
+        int val;
+        cin>>val;
+        if(val==-1){
+            break;
+        }
+        h1.insert(val);
+    }
+
+    h1.display();
+    h1.deleteNode();
+    cout<<endl;
+    h1.display();
+
+}
+
+
 
