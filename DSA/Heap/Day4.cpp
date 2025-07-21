@@ -8,7 +8,7 @@
 // A normal queue is FIFO — first in, first out.
 // A priority queue serves the element with the highest (or lowest) priority first.
 
-// How It Works Internally:
+// NOTE!!
 // A priority queue is implemented using a heap — by default, a max-heap in C++ STL.
 // A heap is a complete binary tree:
 // In max-heap, every parent node is greater than or equal to its children.
@@ -55,6 +55,7 @@
 // pq.push(20);
 // pq.push(5);
 
+// NOTE!!
 // pq.push(val);
 // The value is added at the end of the array
 // then it "bubbles up"(buttom-up) to the correct position to maintain the heap property
@@ -101,7 +102,7 @@ int main() {
 // Declaration of Min Heap:
 // priority_queue<int, vector<int>, greater<int>> pq;
 
-// Component	Meaning
+// Component Meaning
 // int	Type of elements in the priority queue (integers here)
 // vector<int>	Underlying container to store the heap (dynamic array)
 // greater<int>	Comparator: returns true if a > b
@@ -182,8 +183,8 @@ int main() {
 
 // Operation	            queue	               priority_queue	              Description
 // Insert element	       q.push(x);	           pq.push(x);	             Adds element to the back (queue) / heap (priority queue)->insert at end of vector and heapify function is called for heap property 
-// Access front/top	    q.front();	            pq.top();	               Returns front of queue / largest (or smallest with min-heap)
-// Access                back	q.back();	      ❌ Not available           	Back is not meaningful in priority_queue
+// Access front/top	    q.front();	                pq.top();	               Returns front of queue / largest (or smallest with min-heap)
+// Access                back	q.back();	     ❌ Not available           	Back is not meaningful in priority_queue
 // Remove element	        q.pop();	             pq.pop();	                    Removes front (queue) / top (priority queue)
 // Check empty	            q.empty();	         pq.empty();	                  Returns true if empty
 // Get size	             q.size();           	  pq.size();	                      Number of elements
