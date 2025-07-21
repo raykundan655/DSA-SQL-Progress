@@ -1,4 +1,5 @@
 // NOTE!!
+// C++ STL doesn’t give you a "heap" directly—it gives a priority_queue, which is implemented internally using a heap structure.
 
 // A priority queue is a special type of queue where each element is associated with a priority,
 // and elements are served based on their priority, not the order they were inserted (unlike a normal queue).
@@ -54,6 +55,10 @@
 // pq.push(20);
 // pq.push(5);
 
+// pq.push(val);
+// The value is added at the end of the array
+// then it "bubbles up"(buttom-up) to the correct position to maintain the heap property
+
 // First insert 10
 // → Heap array: [10]
 
@@ -69,7 +74,7 @@
 // 5 < 20 → No swap needed.
 
 // C++ or any language that offers a priority queue — the library automatically handles 
-// the swapping using a data structure called a binary heap, but you must understand how it works behind the scenes.
+// the swapping using a data structure called a binary heap
 
 #include <iostream>
 #include <queue>
@@ -258,7 +263,7 @@ int k;
     KthLargest(int k, vector<int>& nums) {
         this->k=k;
         for(int i=0;i<nums.size();i++){
-            q.push(nums[i]);  // hepify the element
+            q.push(nums[i]);  // buttom up(heapify) the element
 
             if(q.size()>k){ //checking ->heap mai k se jada to element to nahi hai
                 //remove the smallest Score after new score add
