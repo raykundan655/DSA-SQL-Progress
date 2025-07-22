@@ -19,6 +19,143 @@
 // When we push, pop, or top:
 // It rearranges the structure so the element with the highest (or lowest) priority is always at the top.
 
+// --------------------------------------(VERY imp for understanding)
+// INTERNAL PROCESS UNDERSTANDING
+
+// First: Who does the work?
+// When you use:
+// priority_queue<int, vector<int>, greater<int>> pq;
+
+// You are not writing the heap logic yourself — the C++ Standard Template Library (STL) does all the internal work.
+
+// The STL uses:
+// A container (like a vector)
+// A heapify process
+// A comparator like greater<int>() or less<int>()
+
+// All of it is handled internally by the function:
+// std::push_heap() (used internally by priority_queue::push)
+
+// So, what happens when you insert?
+  
+// pq.push(5);
+// STL adds 5 to the end of the vector.
+// Then it uses std::push_heap() to bubble up(buttom_up) this value:
+// It keeps checking the parent using the comparator.
+
+// For Min Heap: it calls greater<int>()(parent, child)
+// If this returns true, STL swaps the parent and child automatically.
+
+// You don't write the swap — STL writes and runs it for you!
+
+// Example: Min Heap
+// greater<int>()(parent, child)
+// Let’s say parent = 30, child = 5
+// Call: greater<int>()(30, 5) → this returns true
+
+// Means: parent (30) is greater than child (5) → ❌ violates min-heap rule
+// So STL swaps them → child moves up, parent moves down
+
+// But if:
+// Call: greater<int>()(10, 20) → returns false
+// Means: parent (10) is not greater than child (20) → ✅ already min-heap → no swap needed
+
+template<
+    class T,
+    class Container = std::vector<T>,
+    class Compare = std::less<typename Container::value_type>
+>
+class priority_queue {
+protected:
+    Container c;     // The underlying container
+    Compare comp;    // The comparator (default: max-heap)
+
+public:
+    priority_queue() : c(), comp() {}
+
+    void push(const T& val) {
+        c.push_back(val); // Add to the end
+        std::push_heap(c.begin(), c.end(), comp); // Re-heapify (upward)
+    }
+
+    void pop() {
+        std::pop_heap(c.begin(), c.end(), comp); // Swap max with last
+        c.pop_back(); // Remove the max
+    }
+
+    const T& top() const {
+        return c.front(); // Largest element
+    }
+
+    bool empty() const {
+        return c.empty();
+    }
+
+    size_t size() const {
+        return c.size();
+    }
+};
+
+// Define inside the algo lib
+
+template <typename RandomIt, typename Compare>
+void push_heap(RandomIt first, RandomIt last, Compare comp) {
+    auto value = *(last - 1);  // new value added at the end
+    int index = last - first - 1;
+
+    while (index > 0) {
+        int parent = (index - 1) / 2;
+        if (comp(first[parent], value)) { // Compare parent with new value
+            first[index] = first[parent]; // Move parent down
+            index = parent;
+        } else {
+            break;
+        }
+    }
+    first[index] = value;
+}
+
+template<typename RandomIt, typename Compare>
+void pop_heap(RandomIt first, RandomIt last, Compare comp) {
+    if (last - first <= 1) return;
+
+    // Move the top (first) element to the end
+    std::iter_swap(first, last - 1);
+
+    // Sift down from the root to restore heap in [first, last - 1)
+    auto len = last - first - 1;
+    auto parent = 0;
+
+    while (true) {
+        auto left = 2 * parent + 1;
+        auto right = 2 * parent + 2;
+        auto largest = parent;
+
+        if (left < len && comp(first[largest], first[left])) {
+            largest = left;
+        }
+        if (right < len && comp(first[largest], first[right])) {
+            largest = right;
+        }
+
+        if (largest != parent) {
+            std::swap(first[parent], first[largest]);
+            parent = largest;
+        } else {
+            break;
+        }
+    }
+}
+
+
+
+pq.push(50);
+
+vec.push_back(50);       // append at the end
+push_heap(vec.begin(), vec.end()); // fix heap using heapify-up
+
+
+
 // MAX HEAP
 // priority_queue<int> pq;
 // This defaults to a Max-Heap — it means largest element comes first.
@@ -132,51 +269,6 @@ int main() {
 
     return 0;
 }
-
-// --------------------------------------(VERY imp for understanding)
-// INTERNAL PROCESS UNDERSTANDING
-
-// "How does the priority_queue know when to swap if we don’t write any swap function ourselves?”
-
-// First: Who does the work?
-// When you use:
-// priority_queue<int, vector<int>, greater<int>> pq;
-
-// You are not writing the heap logic yourself — the C++ Standard Template Library (STL) does all the internal work.
-
-// The STL uses:
-// A container (like a vector)
-// A heapify process
-// A comparator like greater<int>() or less<int>()
-
-// All of it is handled internally by the function:
-// std::push_heap() (used internally by priority_queue::push)
-
-// So, what happens when you insert?
-  
-// pq.push(5);
-// STL adds 5 to the end of the vector.
-// Then it uses std::push_heap() to bubble up this value:
-// It keeps checking the parent using the comparator.
-
-// For Min Heap: it calls greater<int>()(parent, child)
-// If this returns true, STL swaps the parent and child automatically.
-
-// You don't write the swap — STL writes and runs it for you!
-
-// Example: Min Heap
-// greater<int>()(parent, child)
-// Let’s say parent = 30, child = 5
-// Call: greater<int>()(30, 5) → this returns true
-
-// Means: parent (30) is greater than child (5) → ❌ violates min-heap rule
-// So STL swaps them → child moves up, parent moves down
-
-// But if:
-// Call: greater<int>()(10, 20) → returns false
-// Means: parent (10) is not greater than child (20) → ✅ already min-heap → no swap needed
-
-
 
 
 // priorty queue operation
