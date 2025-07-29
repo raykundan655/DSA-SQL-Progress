@@ -203,6 +203,10 @@ int main() {
     return 0;
 }
 
+// NOTE
+// "No hash function is perfect enough to completely avoid collisions."
+
+
 
 
 
