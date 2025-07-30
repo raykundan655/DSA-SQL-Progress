@@ -1,5 +1,8 @@
+// Hashing Full concept
 #include<iostream>
 using namespace std;
+
+// class object store key,value pair 
 class node{
     public:
     string key;
@@ -18,7 +21,7 @@ class HashTable{
     int currsize;
     node ** arr;
 
- 
+ // hashfunction provide index(hash value)
     int hashfunction(string key){
         int ind=0;
         for(int i=0;i<key.size();i++){
