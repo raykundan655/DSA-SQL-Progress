@@ -35,15 +35,15 @@ WHERE salary > (
     SELECT AVG(salary)
     FROM employees
 );
--- 🔍 The subquery returns a single value (average salary),
+-- The subquery returns a single value (average salary),
 
 
 -- 2. Multi-Row Subquery
--- ✅ Description:
+-- Description:
 -- Returns multiple values (one column).
 -- Used with operators like IN, ANY, ALL.
 
--- 🧪 Example:
+--  Example:
 -- Get employees who work in departments located in 'New York'.
 
 SELECT name
@@ -53,7 +53,7 @@ WHERE department_id IN (
     FROM departments
     WHERE location = 'New York'
 );
--- 🔍 Subquery returns multiple department IDs, outer query uses them to find matching employees.
+-- Subquery returns multiple department IDs, outer query uses them to find matching employees.
 
 
 
@@ -139,14 +139,13 @@ Returns all rows from the left table, and matched rows from right table.
 If no match, right side shows NULL.
 
 
-🟦 Students
+Students
 student_id	name                           
 1	       Rahul
 2	       Priya
 3	        Ayaan
 
-
-🟩 Marks
+ Marks
 student_id	subject	      marks
 1	        Math	            95
 1	     English	            88
@@ -176,7 +175,7 @@ student_id	subject	      marks
 
 
 --  RIGHT JOIN (Right Outer Join)
--- ➡️ Returns all rows from the right table, and matched rows from left table.
+-- Returns all rows from the right table, and matched rows from left table.
 -- If no match, left side shows NULL.
 
 SELECT e.name, d.name
