@@ -66,7 +66,7 @@ Unlike aggregate functions used with `GROUP BY`, window functions preserve the i
 
 ### Simple definition
 
-> `OVER()` defines the window—the set of rows the window function operates on.
+> `OVER()` defines the window—the set of rows the window function operates on -> OVER() defines the window of rows that a window function can see before performing its calculation. It can include all rows or a particular group of rows, depending on how you use it  .
 
 ### Example 1: `OVER()` — Whole table
 
