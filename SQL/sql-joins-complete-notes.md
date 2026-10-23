@@ -357,6 +357,11 @@ These queries express the same matching logic. A left join is often easier to re
 
 ## 7. FULL OUTER JOIN
 
+FULL OUTER JOIN combines columns from both tables and returns all rows from both tables, whether they match or not.
+Matching rows: Combined into one row.
+Unmatched rows from the left table: Included, with NULL in the right table's columns.
+Unmatched rows from the right table: Included, with NULL in the left table's columns.
+
 A **FULL OUTER JOIN** returns:
 - Rows that match in both tables.
 - Rows that exist only in the left table.
