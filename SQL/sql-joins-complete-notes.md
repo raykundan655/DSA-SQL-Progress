@@ -54,6 +54,24 @@ A join can combine the employee's name with the department name.
 - To calculate totals, averages, and counts across related data.
 - To connect entities such as customers and orders, students and courses, or employees and departments.
 
+### EXTRA KNOWLEDGE 
+##How JOINs Work
+
+* **INNER JOIN:** Combines columns from both tables and returns only the rows that match the join condition.
+
+* **LEFT JOIN:** Combines columns from both tables and returns all rows from the left table and matching rows from the right table. If no match exists, the right table's columns contain `NULL`.
+
+* **RIGHT JOIN:** Combines columns from both tables and returns all rows from the right table and matching rows from the left table. If no match exists, the left table's columns contain `NULL`.
+
+* **FULL OUTER JOIN:** Combines columns from both tables and returns all rows from both tables. Matching rows are combined, while unmatched rows contain `NULL` for the missing table's columns.
+
+* **CROSS JOIN:** Combines columns from both tables and returns every possible combination of rows from the two tables.
+
+* **SELF JOIN:** Joins a table with itself to compare or relate rows within the same table. The result depends on the join type and condition used.
+
+
+
+
 **Core idea:** A join uses a matching condition to decide which rows from the tables belong together. The type of join determines what happens to rows that do not match.
 
 ---
