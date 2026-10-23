@@ -543,6 +543,497 @@ Imagine a teacher:
 - `DENSE_RANK()` → Gives competition ranks (without gaps).
 - `NTILE(4)` → Divides the class into 4 sections.
 
+ROW_NUMBER()
+Definition
+
+ROW_NUMBER() assigns a unique, sequential integer to every row within a result set or partition.
+
+The numbering starts at 1 and increases by 1 for each subsequent row.
+
+Even if two rows have identical values in the ordering column, they receive different row numbers.
+
+Syntax
+ROW_NUMBER() OVER (
+    [PARTITION BY column_name]
+    ORDER BY column_name
+)
+Example
+
+Consider the following Students table:
+
+Student_ID	Name	Marks
+101	Rahul	95
+102	Aman	85
+103	Priya	85
+104	Kundan	70
+SQL Query
+SELECT
+    Student_ID,
+    Name,
+    Marks,
+    ROW_NUMBER() OVER (
+        ORDER BY Marks DESC, Student_ID ASC
+    ) AS row_num
+FROM Students;
+Output
+Student_ID	Name	Marks	row_num
+101	Rahul	95	1
+102	Aman	85	2
+103	Priya	85	3
+104	Kundan	70	4
+Explanation
+ORDER BY Marks DESC sorts students from highest to lowest marks.
+Student_ID ASC breaks ties between students with equal marks.
+ROW_NUMBER() assigns a unique number to each row.
+Aman and Priya receive different row numbers despite having the same marks.
+
+Important: If the ordering columns contain ties and no additional tie-breaker is specified, the order among tied rows is not guaranteed.
+
+Using PARTITION BY
+
+Suppose we want to number employees separately within each department.
+
+SQL Query
+SELECT
+    Employee,
+    Department,
+    Salary,
+    ROW_NUMBER() OVER (
+        PARTITION BY Department
+        ORDER BY Salary DESC
+    ) AS row_num
+FROM Employees;
+
+Here, numbering restarts at 1 for each department.
+
+For example, IT employees might receive row numbers 1, 2, 3, while HR employees receive 1, 2.
+
+Practical Applications
+Selecting the top employee in each department.
+Identifying duplicate records.
+Finding the latest record for each customer.
+Implementing pagination.
+Assigning unique row positions.
+
+Key Takeaway: ROW_NUMBER() always assigns a different sequential number to every row within the same partition, regardless of ties in the ordering values.
+
+3. RANK()
+Definition
+
+RANK() assigns the same rank to rows with equal values in the ordering column.
+
+However, when multiple rows share a rank, the subsequent rank is skipped.
+
+This behavior is known as ranking with gaps.
+
+Syntax
+RANK() OVER (
+    [PARTITION BY column_name]
+    ORDER BY column_name
+)
+Example
+
+Consider the following Students table:
+
+Student_ID	Name	Marks
+101	Rahul	95
+102	Aman	85
+103	Priya	85
+104	Kundan	70
+SQL Query
+SELECT
+    Student_ID,
+    Name,
+    Marks,
+    RANK() OVER (
+        ORDER BY Marks DESC
+    ) AS student_rank
+FROM Students;
+Output
+Student_ID	Name	Marks	student_rank
+101	Rahul	95	1
+102	Aman	85	2
+103	Priya	85	2
+104	Kundan	70	4
+Explanation
+
+Step 1: Rahul has the highest marks, so he receives rank 1.
+
+Step 2: Aman and Priya both scored 85, so both receive rank 2.
+
+Step 3: Because two students occupy rank 2, the next rank is 4, not 3.
+
+Step 4: Kundan receives rank 4.
+
+Therefore, the ranking sequence is:
+
+1, 2, 2, 4
+
+Understanding Ranking Gaps
+
+Consider these marks:
+
+Student	Marks	RANK()
+A	100	1
+B	90	2
+C	90	2
+D	90	2
+E	80	5
+
+Three students share rank 2. The next rank becomes 5.
+
+The number of skipped ranks depends on how many rows share the preceding rank.
+
+Using PARTITION BY
+SELECT
+    Employee,
+    Department,
+    Salary,
+    RANK() OVER (
+        PARTITION BY Department
+        ORDER BY Salary DESC
+    ) AS salary_rank
+FROM Employees;
+
+This assigns salary ranks separately within each department.
+
+Employees with the same salary receive the same rank, and subsequent ranks are skipped.
+
+Practical Applications
+Ranking students in examinations.
+Creating competition leaderboards.
+Ranking employees based on salary.
+Comparing sales performance.
+Identifying all employees tied for a particular rank.
+
+Key Takeaway: RANK() assigns equal ranks to tied values and skips subsequent ranks.
+
+4. DENSE_RANK()
+Definition
+
+DENSE_RANK() assigns the same rank to rows with equal ordering values, just like RANK().
+
+The difference is that DENSE_RANK() does not skip ranks after ties.
+
+Its ranking sequence remains consecutive.
+
+Syntax
+DENSE_RANK() OVER (
+    [PARTITION BY column_name]
+    ORDER BY column_name
+)
+Example
+
+Consider the same Students table:
+
+Student_ID	Name	Marks
+101	Rahul	95
+102	Aman	85
+103	Priya	85
+104	Kundan	70
+SQL Query
+SELECT
+    Student_ID,
+    Name,
+    Marks,
+    DENSE_RANK() OVER (
+        ORDER BY Marks DESC
+    ) AS dense_rank
+FROM Students;
+Output
+Student_ID	Name	Marks	dense_rank
+101	Rahul	95	1
+102	Aman	85	2
+103	Priya	85	2
+104	Kundan	70	3
+Explanation
+
+Step 1: Rahul receives rank 1.
+
+Step 2: Aman and Priya both receive rank 2 because they have equal marks.
+
+Step 3: Kundan receives rank 3.
+
+Unlike RANK(), no rank is skipped after the tie at rank 2.
+
+The resulting ranking sequence is:
+
+1, 2, 2, 3
+
+Understanding the Difference
+
+Suppose five students have the following marks:
+
+Student	Marks	RANK()	DENSE_RANK()
+A	100	1	1
+B	90	2	2
+C	90	2	2
+D	90	2	2
+E	80	5	3
+
+Notice that:
+
+RANK() assigns rank 5 to student E.
+DENSE_RANK() assigns rank 3 to student E.
+
+This is because DENSE_RANK() counts distinct ranking levels rather than leaving gaps based on the number of tied rows.
+
+Using PARTITION BY
+SELECT
+    Employee,
+    Department,
+    Salary,
+    DENSE_RANK() OVER (
+        PARTITION BY Department
+        ORDER BY Salary DESC
+    ) AS salary_rank
+FROM Employees;
+
+This ranks employees separately within each department without skipping ranks after ties.
+
+Practical Applications
+Finding the second-highest distinct salary.
+Finding the third-highest distinct salary.
+Ranking students based on distinct marks.
+Ranking products based on sales.
+Creating rankings where consecutive positions are required.
+Example: Finding the Second-Highest Distinct Salary
+WITH SalaryRanks AS (
+    SELECT
+        Employee,
+        Salary,
+        DENSE_RANK() OVER (
+            ORDER BY Salary DESC
+        ) AS salary_rank
+    FROM Employees
+)
+SELECT
+    Employee,
+    Salary
+FROM SalaryRanks
+WHERE salary_rank = 2;
+Explanation
+Salaries are ranked from highest to lowest.
+Employees with equal salaries receive the same rank.
+DENSE_RANK() assigns consecutive ranks to distinct salary values.
+WHERE salary_rank = 2 returns employees earning the second-highest distinct salary.
+
+If multiple employees share that salary, all of them are returned.
+
+Key Takeaway: DENSE_RANK() assigns equal ranks to tied values without skipping subsequent ranks.
+
+5. NTILE()
+Definition
+
+NTILE(n) divides the rows in an ordered result set into n approximately equal-sized groups, called buckets.
+
+Each row receives a bucket number ranging from 1 to n.
+
+Unlike ranking functions, NTILE() is designed to distribute rows across groups rather than assign competition ranks.
+
+Syntax
+NTILE(number_of_buckets) OVER (
+    [PARTITION BY column_name]
+    ORDER BY column_name
+)
+
+Here, number_of_buckets specifies how many groups to create.
+
+For example:
+
+NTILE(2) creates two buckets.
+NTILE(3) creates three buckets.
+NTILE(4) creates four buckets.
+Example 1: NTILE(2)
+
+Consider the following Students table:
+
+Student_ID	Name	Marks
+101	Rahul	95
+102	Aman	85
+103	Priya	85
+104	Kundan	70
+SQL Query
+SELECT
+    Student_ID,
+    Name,
+    Marks,
+    NTILE(2) OVER (
+        ORDER BY Marks DESC, Student_ID ASC
+    ) AS bucket
+FROM Students;
+Output
+Student_ID	Name	Marks	bucket
+101	Rahul	95	1
+102	Aman	85	1
+103	Priya	85	2
+104	Kundan	70	2
+Explanation
+
+There are four rows, and we want to divide them into two buckets.
+
+Bucket 1 contains the first two rows.
+Bucket 2 contains the last two rows.
+
+Therefore, the bucket assignments are:
+
+1, 1, 2, 2
+
+Notice that Aman and Priya have the same marks but belong to different buckets.
+
+This is because NTILE() distributes rows according to their ordered positions, not their ranking values.
+
+Example 2: NTILE(4)
+
+Suppose there are eight employees ordered by salary.
+
+SELECT
+    Employee,
+    Salary,
+    NTILE(4) OVER (
+        ORDER BY Salary DESC
+    ) AS bucket
+FROM Employees;
+
+If there are eight rows, each bucket will contain two rows.
+
+Ordered Rows	Bucket
+Rows 1–2	1
+Rows 3–4	2
+Rows 5–6	3
+Rows 7–8	4
+
+This divides the ordered records into four approximately equal-sized groups.
+
+What Happens When Rows Cannot Be Divided Equally?
+
+Suppose we have ten rows and use NTILE(3).
+
+The rows cannot be divided equally among three buckets.
+
+SQL distributes the extra rows to the earlier buckets.
+
+The resulting distribution is:
+
+Bucket	Number of Rows
+1	4
+2	3
+3	3
+
+The difference between bucket sizes is at most one.
+
+Using PARTITION BY
+SELECT
+    Employee,
+    Department,
+    Salary,
+    NTILE(2) OVER (
+        PARTITION BY Department
+        ORDER BY Salary DESC
+    ) AS salary_group
+FROM Employees;
+
+This divides employees into two approximately equal-sized buckets separately within each department.
+
+The bucket numbering restarts at 1 for every department.
+
+Practical Applications
+Dividing customers into groups based on spending.
+Segmenting employees by salary.
+Splitting students into performance groups.
+Dividing datasets into approximately equal-sized groups.
+Creating quartiles or other distribution-based segments.
+
+Key Takeaway: NTILE(n) distributes ordered rows across n approximately equal-sized buckets. Rows with equal ordering values can be placed in different buckets.
+
+6. Comparison of All Four Functions
+
+Consider the following marks:
+
+95, 85, 85, 70
+
+The functions produce these results:
+
+Marks	ROW_NUMBER()	RANK()	DENSE_RANK()	NTILE(2)
+95	1	1	1	1
+85	2	2	2	1
+85	3	2	2	2
+70	4	4	3	2
+
+Note: For ROW_NUMBER() and NTILE(), tied rows can receive different assignments. Their exact order depends on the ordering criteria. The example uses a deterministic tie-breaker for illustration.
+
+Feature Comparison
+Feature	ROW_NUMBER()	RANK()	DENSE_RANK()	NTILE(n)
+Assigns a unique number to every row	Yes	No	No	Not necessarily
+Gives tied values the same result	No	Yes	Yes	Not necessarily
+Skips ranks after ties	Not applicable	Yes	No	Not applicable
+Divides rows into buckets	No	No	No	Yes
+Supports PARTITION BY	Yes	Yes	Yes	Yes
+Typical use	Unique numbering	Competition ranking	Ranking distinct values	Data segmentation
+7. Choosing the Right Function
+
+Choose the function based on your requirement.
+
+Use ROW_NUMBER() when:
+Every row must receive a unique number.
+You need one record per group.
+You want to identify duplicate records.
+Use RANK() when:
+Equal values should receive the same rank.
+Subsequent ranks should be skipped after ties.
+You need competition-style rankings.
+Use DENSE_RANK() when:
+Equal values should receive the same rank.
+Ranks must remain consecutive.
+You need the second- or third-highest distinct value.
+Use NTILE() when:
+You want to divide records into groups.
+You need approximately equal-sized buckets.
+You want to segment customers, employees, or other records.
+8. Important Interview Questions
+
+Q1. What is the difference between ROW_NUMBER() and RANK()?
+
+ROW_NUMBER() assigns a unique number to each row. RANK() assigns the same rank to tied values and skips subsequent ranks.
+
+Q2. What is the difference between RANK() and DENSE_RANK()?
+
+Both assign equal ranks to tied values. RANK() skips subsequent ranks, whereas DENSE_RANK() does not.
+
+Q3. Can ROW_NUMBER() assign the same number to two rows?
+
+No. Each row receives a unique number within its partition.
+
+Q4. What is the purpose of NTILE(4)?
+
+It divides the ordered rows into four approximately equal-sized buckets.
+
+Q5. Which function is suitable for finding the second-highest distinct salary?
+
+DENSE_RANK() is generally suitable because it assigns consecutive ranks to distinct salary values.
+
+Q6. What is the purpose of PARTITION BY?
+
+It divides rows into groups so that the window function operates independently within each group.
+
+Q7. Does a window function reduce the number of rows returned?
+
+No. Window functions calculate values for individual rows without collapsing them into groups. A separate filter may reduce the final result.
+
+9. Final Summary
+Function	Main Purpose	Example Output
+ROW_NUMBER()	Assigns a unique sequential number to every row	1, 2, 3, 4
+RANK()	Assigns equal ranks to ties and skips subsequent ranks	1, 2, 2, 4
+DENSE_RANK()	Assigns equal ranks to ties without skipping ranks	1, 2, 2, 3
+NTILE(2)	Divides ordered rows into two approximately equal-sized buckets	1, 1, 2, 2
+
+Remember these four rules:
+
+ROW_NUMBER() → Every row gets a unique number.
+RANK() → Ties share a rank; gaps are created.
+DENSE_RANK() → Ties share a rank; no gaps are created.
+NTILE(n) → Rows are distributed across n approximately equal-sized buckets.
+
 ---
 
 ## Quick Summary
